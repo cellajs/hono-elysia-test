@@ -79,7 +79,7 @@ const model = new Elysia({ name: 'model' }).model({
 `
 
 const totalInstance = 3
-const perInstance = 100
+const perInstance = 470
 
 for (let i = 0; i < totalInstance; i++) {
     template += `const routes${i + 1} = new Elysia()
@@ -142,4 +142,4 @@ template += `const app = new Elysia()
 export type app = typeof app
 `
 
-writeFileSync(import.meta.dirname + '/index.ts', template)
+writeFileSync(import.meta.dir + '/index.ts', template)

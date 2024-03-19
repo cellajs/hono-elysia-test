@@ -117,7 +117,7 @@ const UserSchema = z
   .openapi('User')
 `
 
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 120; i++) {
     code += `
     const route${i} = createRoute({
         method: 'get',
@@ -143,7 +143,7 @@ for (let i = 0; i < 300; i++) {
 
 code += 'const routes1 = app1'
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 40; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -167,7 +167,7 @@ code += `
 const app2 = new CustomHono();
 const routes2 = app2`
 
-for (let i = 100; i < 200; i++) {
+for (let i = 40; i < 80; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -191,7 +191,7 @@ code += `
 const app3 = new CustomHono();
 const routes3 = app3`
 
-for (let i = 200; i < 300; i++) {
+for (let i = 80; i < 120; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -231,4 +231,4 @@ export type AppRoute = typeof routes
 export default routes
 `
 
-writeFileSync(import.meta.dirname + '/index.ts', code)
+writeFileSync(import.meta.dir + '/index.ts', code)
