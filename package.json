@@ -2,10 +2,14 @@
   "type": "module",
   "scripts": {
     "prepare": "bun src/hono/create.ts && bun src/elysia/create.ts",
-    "trace": "tsc --generateTrace ./trace --incremental false"
+    "trace": "tsc --generateTrace ./trace --incremental false",
+    "dev:hono": "bun src/hono/index.ts",
+    "dev:elysia": "bun src/elysia/index.ts"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.0.4",
+    "@elysiajs/swagger": "^1.0.2",
+    "@hono/swagger-ui": "^0.2.1",
     "@hono/zod-openapi": "^0.9.8",
     "elysia": "^1.0.4",
     "hono": "^4.1.1"

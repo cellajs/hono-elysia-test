@@ -2,6 +2,7 @@ import { writeFileSync } from 'fs'
 
 let code = `
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi'
+import { swaggerUI } from '@hono/swagger-ui'
 
 export type Env = {
     Variables: {
@@ -166,7 +167,7 @@ code += `
 const app2 = new CustomHono();
 const routes2 = app2`
 
-for (let i = 0; i < 100; i++) {
+for (let i = 100; i < 200; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -190,7 +191,7 @@ code += `
 const app3 = new CustomHono();
 const routes3 = app3`
 
-for (let i = 0; i < 100; i++) {
+for (let i = 200; i < 300; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -210,7 +211,19 @@ for (let i = 0; i < 100; i++) {
   `
 }
 
-code += `const routes = app1.route('/', routes1).route('/', routes2).route('/', routes3)`
+code += `const routes = app1
+  .route('/', routes1)
+  .route('/', routes2)
+  .route('/', routes3)
+  .doc('/doc', {
+    openapi: '3.0.0',
+    info: {
+        version: '1.0.0',
+        title: 'My API'
+    }
+  })
+  .get('/swagger', swaggerUI({ url: '/doc' }))
+`
 
 code += `
 export type AppRoute = typeof routes

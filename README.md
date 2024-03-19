@@ -31,3 +31,9 @@ Once dropped, you should be able to visualize how long each file take to process
 Click on each slide, should revealed how long it took and the file path.
 
 If you are not familiar with perfetto, please see [Type Performance tracing](https://github.com/microsoft/TypeScript-wiki/blob/main/Performance-Tracing.md)
+
+4. Additionally, you may use dev commands to interspect documentation for each framework by using the following commands:
+- bun dev:hono - to serve Hono server
+- bun dev:elysia - to server Elysia server
+
+Once server is started, head to http://localhost:3000/swagger

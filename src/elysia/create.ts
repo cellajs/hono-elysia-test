@@ -2,6 +2,7 @@ import { writeFileSync } from 'fs'
 
 let template = `
 import { Elysia, t } from 'elysia'
+import { swagger } from '@elysiajs/swagger'
 
 const errorBase = {
     success: t.Boolean({
@@ -122,6 +123,17 @@ for (let i = 0; i < totalInstance; i++) {
 }
 
 template += `const app = new Elysia()
+    .use(
+        swagger({
+            documentation: {
+                openapi: '3.0.0',
+                info: {
+                    title: 'Elysia',
+                    version: '1.0.0'
+                }
+            }
+        })
+    )
     .use(routes1)
     .use(routes2)
     .use(routes3)
