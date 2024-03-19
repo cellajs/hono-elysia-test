@@ -1,1 +1,8 @@
 node_modules
+
+# Generated file for each framework
+src/elysia/index.ts
+src/hono/index.ts
+
+# Trace result
+trace

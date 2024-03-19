@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "module": "ES2022",
+    "target": "ES2021",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "rootDir": "./src",
+    "skipLibCheck": true
   }
 }
