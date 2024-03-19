@@ -1,7 +1,8 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync } from 'fs'
 
 let code = `
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi'
+import { swaggerUI } from '@hono/swagger-ui'
 
 export type Env = {
     Variables: {
@@ -114,13 +115,13 @@ const UserSchema = z
         }),
   })
   .openapi('User')
-`;
+`
 
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 120; i++) {
     code += `
     const route${i} = createRoute({
         method: 'get',
-        path: '/route/{id}',
+        path: '/route${i}/{id}',
         request: {
             query: QuerySchema,
             params: ParamsSchema,
@@ -137,12 +138,12 @@ for (let i = 0; i < 300; i++) {
           },
           ...errorResponses,
       })
-  `;
+  `
 }
 
-code += 'const routes1 = app1';
+code += 'const routes1 = app1'
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 40; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -159,14 +160,14 @@ for (let i = 0; i < 100; i++) {
             }
         });
     })
-  `;
+  `
 }
 
 code += `
 const app2 = new CustomHono();
-const routes2 = app2`;
+const routes2 = app2`
 
-for (let i = 0; i < 100; i++) {
+for (let i = 40; i < 80; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -183,14 +184,14 @@ for (let i = 0; i < 100; i++) {
             }
         });
     })
-  `;
+  `
 }
 
 code += `
 const app3 = new CustomHono();
-const routes3 = app3`;
+const routes3 = app3`
 
-for (let i = 0; i < 100; i++) {
+for (let i = 80; i < 120; i++) {
     code += `
     .openapi(route${i}, (ctx) => {
         return ctx.json({
@@ -207,16 +208,27 @@ for (let i = 0; i < 100; i++) {
             }
         });
     })
-  `;
+  `
 }
 
-code += `const routes = app1.route('/', routes1).route('/', routes2).route('/', routes3)`;
-
+code += `const routes = app1
+  .route('/', routes1)
+  .route('/', routes2)
+  .route('/', routes3)
+  .doc('/doc', {
+    openapi: '3.0.0',
+    info: {
+        version: '1.0.0',
+        title: 'My API'
+    }
+  })
+  .get('/swagger', swaggerUI({ url: '/doc' }))
+`
 
 code += `
 export type AppRoute = typeof routes
 
 export default routes
-`;
+`
 
-writeFileSync('src/index.ts', code);
+writeFileSync(import.meta.dir + '/index.ts', code)
